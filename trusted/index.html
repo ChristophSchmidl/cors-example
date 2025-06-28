@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><title>Trusted Site</title></head>
+<body>
+  <h1>Trusted Frontend</h1>
+  <button onclick="login()">Login</button>
+  <button onclick="getData()">Get Private Data</button>
+  <pre id="output"></pre>
+
+  <script>
+    function login() {
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        credentials: 'include'
+      }).then(r => r.json()).then(console.log);
+    }
+
+    /* 
+    See: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    The `credentials` option in the fetch API controls whether cookies, authorization headers, or TLS client certificates are sent with the request.
+    It can take three values:
+
+        - omit: never send credentials in the request or include credentials in the response.
+        - same-origin (the default): only send and include credentials for same-origin requests.
+        - include: always include credentials, even cross-origin.
+    */
+
+
+    function getData() {
+      fetch('http://localhost:3000/userdata', {
+        credentials: 'include'
+      })
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(err => console.error('Error:', err));
+    }
+  </script>
+</body>
+</html>
